@@ -24,8 +24,18 @@ class ImageDetailViewController: UIViewController {
             let image = UIImage(named: imageName)
             imageView.image = image
         }
+        
+        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .action, target: self, action: #selector(share))
 
 
+    }
+    
+    @objc func share(){
+        guard let  image = imageView.image?.jpegData(compressionQuality: 0.8) else { return }
+        
+        let uac = UIActivityViewController(activityItems: [image], applicationActivities: [])
+        uac.popoverPresentationController?.barButtonItem = navigationItem.rightBarButtonItem
+        present(uac, animated: true)
     }
     
     override func viewWillAppear(_ animated: Bool) {
